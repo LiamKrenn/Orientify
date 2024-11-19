@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./src/backend
+    command: |
+      bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn api.main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
+    volumes:
+      - ./src/backend:/usr/src/backend/
+    ports:
+      - 8002:8000
+    environment:
+      - DATABASE_URL=postgresql://orientify_manager:orientify_manager@db/orientify_manager_dev
+  db:
+    image: postgres:15.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=orientify_manager
+      - POSTGRES_PASSWORD=orientify_manager
+      - POSTGRES_DB=orientify_manager_dev
+
+volumes:
+  postgres_data:
