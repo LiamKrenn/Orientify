@@ -6,8 +6,8 @@ from db.session import engine
 
 Base = declarative_base()
 
-class Compass(Base):
-    __tablename__ = "compass"
+class Data(Base):
+    __tablename__ = "data"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     angle: Mapped[float] = mapped_column()
@@ -15,7 +15,7 @@ class Compass(Base):
     
     def __repr__(self) -> str:
         return (
-            f"Compass(id={self.id!r}, angle={self.angle!r}, timestamp={self.timestamp!r}) "
+            f"Data(id={self.id!r}, angle={self.angle!r}, timestamp={self.timestamp!r}) "
         )
     
 class RawData(Base):

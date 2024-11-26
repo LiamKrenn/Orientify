@@ -1,12 +1,12 @@
-from api.model import CompassSchema, RawDataSchema
+from api.model import DataSchema, RawDataSchema
 from db.session import session
-from db.model import Compass, RawData
+from db.model import Data, RawData
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 
-async def create_data(payload: CompassSchema):
+async def create_data(payload: DataSchema):
     try:
-        data = Compass(
+        data = Data(
             angle=payload.angle
         )
         session.add(data)
@@ -17,18 +17,18 @@ async def create_data(payload: CompassSchema):
         raise HTTPException(status_code=409, detail=f"Error while creating data: {e}")
 
 async def get_one_data(id: int):
-    data = session.query(Compass).filter(Compass.id == id).first()
+    data = session.query(Data).filter(Data.id == id).first()
     if data is None:
         raise HTTPException(status_code=404, detail="Data not found")
     return data
 
 async def get_all_data():
-    data = session.query(Compass).all()
+    data = session.query(Data).all()
     return data
 
-async def update_data(id: int, payload: CompassSchema):
+async def update_data(id: int, payload: DataSchema):
     try:
-        data: Compass = await get_one_data(id)
+        data: Data = await get_one_data(id)
         data.angle = payload.angle
         session.add(data)
         session.commit()
@@ -38,12 +38,12 @@ async def update_data(id: int, payload: CompassSchema):
         raise HTTPException(status_code=409, detail=f"Error while updating data: {e}")
 
 async def delete_data(id: int):
-    data: Compass = await get_one_data(id)
+    data: Data = await get_one_data(id)
     session.delete(data)
     session.commit()
     return data
 
-async def create_raw_data(id: int, payload: RawDataSchema):
+async def create_raw_data(payload: RawDataSchema):
     try:
         data = RawData(
             value=payload.value,

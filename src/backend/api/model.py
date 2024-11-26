@@ -2,10 +2,10 @@ from pydantic import BaseModel
 from datetime import datetime
 from fastapi import HTTPException
 
-class CompassSchema(BaseModel):
+class DataSchema(BaseModel):
     angle: float
 
-class CompassDB(CompassSchema):
+class DataDB(DataSchema):
     id: int
     timestamp: datetime = datetime.now()
 
@@ -14,6 +14,6 @@ class CompassDB(CompassSchema):
 class RawDataSchema(BaseModel):
     value: float
 
-class RawDataDB(CompassSchema):
+class RawDataDB(RawDataSchema):
     id: int
     timestamp: datetime = datetime.now()
