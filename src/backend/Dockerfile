@@ -24,4 +24,6 @@ RUN set -eux \
 COPY . /usr/src/backend/
 
 # define the command to run the application
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+EXPOSE 8000

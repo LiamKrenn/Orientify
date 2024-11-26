@@ -11,4 +11,9 @@ class CompassDB(CompassSchema):
 
 
 
+class RawDataSchema(BaseModel):
+    value: float
 
+class RawDataDB(CompassSchema):
+    id: int
+    timestamp: datetime = datetime.now()
