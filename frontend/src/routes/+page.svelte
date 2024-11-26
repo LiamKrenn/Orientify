@@ -13,5 +13,5 @@
 </svelte:head>
 
 <div class="flex h-full w-full items-center justify-center">
-	<Compass {degree} />
+	<Compass {degree} size={1} />
 </div>
