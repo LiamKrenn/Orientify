@@ -1,14 +1,20 @@
 <script>
 	export let degree = 0;
+	export let size = 1;
 </script>
 
-<div class="compass flex h-96 w-96 items-center justify-center">
-	<p class="text-3xl">
+<div
+	class="compass flex items-center justify-center bg-slate-800"
+	style="height: {24 * size}rem; width: {24 * size}rem"
+>
+	<p style="font-size: {1.875 * size}rem; line-height: {2.25 * size}rem">
 		{degree.toFixed(1)}°
 	</p>
 	<div class="absolute" style="rotate: {degree - 90}deg">
 		<div
-			class="h-8 w-8 translate-x-[11.5rem] border-[1rem] border-transparent border-l-red-500"
+			style="height: {2 * size}rem; width: {2 * size}rem; transform: translate({11.5 *
+				size}rem, 0); border-width: {size}rem;"
+			class="border-transparent border-l-red-500"
 		></div>
 	</div>
 </div>
