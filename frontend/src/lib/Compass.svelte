@@ -12,7 +12,7 @@
 	</p>
 	<div class="absolute" style="rotate: {degree - 90}deg">
 		<div
-			style="height: {2 * size}rem; width: {2 * size}rem; transform: translate({11.5 *
+			style="height: {2 * size}rem; width: {2 * size}rem; transform: translate({11.45 *
 				size}rem, 0); border-width: {size}rem;"
 			class="border-transparent border-l-red-500"
 		></div>
