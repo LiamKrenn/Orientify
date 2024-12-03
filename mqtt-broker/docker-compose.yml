@@ -2,9 +2,9 @@
 version: "3.7"
 services:
   # mqtt5 eclipse-mosquitto
-  mqtt5:
+  mqtt-broker:
     image: eclipse-mosquitto
-    container_name: mqtt5
+    container_name: mqtt-broker
     ports:
       - "1883:1883" #default mqtt port
       - "9001:9001" #default mqtt port for websockets
@@ -22,4 +22,4 @@ volumes:
 
 networks:
   default:
-    name: mqtt5-network
+    name: mqtt-network
