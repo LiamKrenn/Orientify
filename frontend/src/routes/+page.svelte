@@ -8,10 +8,4 @@
 	}, 2);
 </script>
 
-<svelte:head>
-	<title>Orientify</title>
-</svelte:head>
-
-<div class="flex h-full w-full items-center justify-center">
-	<Compass {degree} size={1} />
-</div>
+<Compass {degree} size={1} />
