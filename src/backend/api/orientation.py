@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from .model import DataSchema, DataDB
 from crud import crud
+from datetime import datetime
 
 router = APIRouter()
 
@@ -15,9 +16,16 @@ async def get_one_data(id: int):
     return data
 
 @router.get("/orientation/", response_model=list[DataDB], status_code=200)
-async def get_all_data():
-    data = await crud.get_all_data()
+async def get_all_data(start_date: datetime | None = Query(None),
+                       end_date: datetime | None = Query(None)):
+    data = await crud.get_all_data(start_date, end_date)
     return data
+
+@router.get("/orientation/grouped/", response_model=dict, status_code=200)
+async def get_all_grouped_data(steps: int):
+    data = await crud.get_all_grouped_data(steps)
+    return data
+
 
 @router.put("/orientation/{id}", response_model=DataDB, status_code=200)
 async def update_data(id: int, payload: DataSchema):
