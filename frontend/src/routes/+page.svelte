@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_WS_IP, PUBLIC_WS_PORT } from '$env/static/public';
 	import Compass from '$lib/Compass.svelte';
+	import { onDestroy } from 'svelte';
 
 	let degree = 0;
 
@@ -15,6 +16,11 @@
 	ws.onopen = () => {
 		open = true;
 		console.log('Connected to WebSocket');
+	};
+
+	ws.onclose = () => {
+		open = false;
+		console.log('Disconnected from WebSocket');
 	};
 
 	ws.onmessage = (event) => {
@@ -41,6 +47,10 @@
 			}
 		}
 	}, 1000);
+
+	onDestroy(() => {
+		ws.close();
+	});
 </script>
 
 {#if !open}
