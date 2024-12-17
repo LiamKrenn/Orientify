@@ -44,7 +44,6 @@ async def get_all_grouped_data(steps: int):
     query = session.query(Data.angle, func.count(Data.id)).group_by(Data.angle)
     results = query.all()
 
-    print (results)
     grouped_data = {}
     for i in range(0, 360, steps):
         range_start = i
@@ -85,7 +84,10 @@ async def delete_data(id: int):
 async def create_raw_data(payload: RawDataSchema):
     try:
         data = RawData(
-            value=payload.value,
+            microphone1Data=payload.microphone1Data,
+            microphone2Data=payload.microphone2Data,
+            timeDifference=payload.timeDifference,
+            microphonesDistance=payload.microphonesDistance,
         )
         session.add(data)
         session.commit()
@@ -107,7 +109,10 @@ async def get_all_raw_data():
 async def update_raw_data(id: int, payload: RawDataSchema):
     try:
         data: RawData = await get_one_raw_data(id)
-        data.value = payload.value
+        data.microphone1Data = payload.microphone1Data
+        data.microphone2Data = payload.microphone2Data
+        data.timeDifference = payload.timeDifference
+        data.microphonesDistance = payload.microphonesDistance
         session.add(data)
         session.commit()
         return data

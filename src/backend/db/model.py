@@ -1,4 +1,4 @@
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Integer, ARRAY, Float
 from datetime import datetime
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column
 from db.session import engine
@@ -23,11 +23,17 @@ class RawData(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     timestamp: Mapped[datetime] = mapped_column(default=datetime.now)
-    value: Mapped[float] = mapped_column()
+    
+    microphone1Data: Mapped[list[int]] = mapped_column(ARRAY(Integer))
+    microphone2Data: Mapped[list[int]] = mapped_column(ARRAY(Integer))
+    timeDifference: Mapped[float] = mapped_column(Float)
+    microphonesDistance: Mapped[float] = mapped_column(Float, default=0.06)
 
     def __repr__(self) -> str:
         return (
-            f"RawData(id={self.id!r}, value={self.value!r}, timestamp={self.timestamp!r}) "
+            f"AudioDatenPacket(id={self.id!r}, timestamp={self.timestamp!r}, "
+            f"microphone1Data={self.microphone1Data!r}, microphone2Data={self.microphone2Data!r}, "
+            f"timeDifference={self.timeDifference!r}, microphonesDistance={self.microphonesDistance!r})"
         )
 
 
