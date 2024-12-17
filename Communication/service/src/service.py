@@ -1,11 +1,27 @@
 import asyncio
-import websockets
+from websockets.asyncio.client import connect
 import paho.mqtt.client as mqtt
 import os
 
+from calculation import calculate_angle
+
+
+class WebSocketClient:
+    def __init__(self, uri):
+        self.uri = uri
+        self.connection = None
+
+    async def connect(self):
+        async with connect(self.uri) as self.connection:
+            print('Connected to websocket server.')
+
+    async def send_message(self, message):
+        async with connect(self.uri) as websocket:
+            await websocket.send(message)
+
 
 class MQTTConsumer:
-    def __init__(self, broker, port, topic, websocket_client, username, password):
+    def __init__(self, broker, port, topic, websocket_client: WebSocketClient, username, password):
         self.broker = broker
         self.port = port
         self.topic = topic
@@ -26,31 +42,13 @@ class MQTTConsumer:
         message = msg.payload.decode("utf-8")
         print(f"Received MQTT message: {message}")
 
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        loop.create_task(self.websocket_client.send_message(message))
-        loop.run_until_complete(loop.shutdown_asyncgens())
+        asyncio.run(self.websocket_client.send_message(calculate_angle(message)))
 
 
     def start(self):
         self.client.username_pw_set(username=self.username, password=self.password)
         self.client.connect(self.broker, self.port, 60)
         self.client.loop_start()
-
-
-class WebSocketClient:
-    def __init__(self, uri):
-        self.uri = uri
-        self.connection = None
-
-    async def connect(self):
-        self.connection = await websockets.connect(self.uri)
-        print("WebSocket connection established.")
-
-    async def send_message(self, message):
-        await self.connection.send(message)
-        print(f"Sent message to WebSocket server: {message}")
 
 
 MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
@@ -61,9 +59,7 @@ MQTT_PWD = os.getenv("MQTT_PWD", "admin")
 WEBSOCKET_URI = os.getenv("WEBSOCKET_URI", "ws://localhost:8765")
 
 websocket_client = WebSocketClient(WEBSOCKET_URI)
-
-asyncio.run(websocket_client.connect())
-
+print(MQTT_BROKER, MQTT_PORT, MQTT_TOPIC, websocket_client, MQTT_USER, MQTT_PWD)
 mqtt_consumer = MQTTConsumer(MQTT_BROKER, MQTT_PORT, MQTT_TOPIC, websocket_client, MQTT_USER, MQTT_PWD)
 mqtt_consumer.start()
 

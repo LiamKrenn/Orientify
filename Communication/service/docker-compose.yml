@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  service:
+    build: src
+    container_name: service
+    environment:
+      - MQTT_BROKER=host.docker.internal
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=orientify_data
+      - MQTT_USER=admin
+      - MQTT_PWD=admin
+      - WEBSOCKET_URI=ws://host.docker.internal:8765
+
