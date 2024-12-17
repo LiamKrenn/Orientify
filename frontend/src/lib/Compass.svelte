@@ -10,7 +10,7 @@
 	<p style="font-size: {1.875 * size}rem; line-height: {2.25 * size}rem">
 		{degree.toFixed(1)}°
 	</p>
-	<div class="absolute" style="rotate: {degree - 90}deg">
+	<div class="absolute duration-150" style="rotate: {degree - 90}deg">
 		<div
 			style="height: {2 * size}rem; width: {2 * size}rem; transform: translate({11.45 *
 				size}rem, 0); border-width: {size}rem;"
