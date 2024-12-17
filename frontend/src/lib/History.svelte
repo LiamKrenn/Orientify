@@ -51,7 +51,7 @@
 		for (let i = 0; i < 360; i += steps) {
 			data.push({
 				category: `${i}-${i + steps}°`,
-				value: history_data[`${i}-${i + steps}`] || 0
+				value: history_data[`${i}-${i + steps - 1}`] || 0
 			});
 		}
 
