@@ -9,10 +9,17 @@ services:
       - "1883:1883" #default mqtt port
       - "9001:9001" #default mqtt port for websockets
     volumes:
-      - ./config:/mosquitto/config:rw
-      - ./data:/mosquitto/data:rw
-      - ./log:/mosquitto/log:rw
+      - ./mqtt-broker/config:/mosquitto/config:rw
+      - ./mqtt-broker/data:/mosquitto/data:rw
+      - ./mqtt-broker/log:/mosquitto/log:rw
     restart: unless-stopped
+
+  ws-server:
+    build: ws-server
+    ports:
+      - "8765:8765"
+    environment:
+      - PYTHONUNBUFFERED=1
 
 # volumes for mapping data,config and log
 volumes:
@@ -23,3 +30,6 @@ volumes:
 networks:
   default:
     name: mqtt-network
+  
+  websocket-network:
+    driver: bridge
