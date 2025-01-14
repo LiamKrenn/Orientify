@@ -8,6 +8,9 @@ WORKDIR /usr/src/backend
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+ENV PYTHONPATH=/usr/src/backend
+
+
 # copy requirements file
 COPY ./requirements.txt /usr/src/backend/requirements.txt
 
