@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_WS_IP, PUBLIC_WS_PORT } from '$env/static/public';
+	import { PUBLIC_WS_URL } from '$env/static/public';
 	import Compass from '$lib/Compass.svelte';
 	import { onDestroy } from 'svelte';
 
@@ -7,7 +7,7 @@
 
 	let open = false;
 
-	let ws = new WebSocket(`ws://${PUBLIC_WS_IP}:${PUBLIC_WS_PORT}/`);
+	let ws = new WebSocket(`ws://${PUBLIC_WS_URL}/`);
 
 	let noDataYet = true;
 	let timePassed: string | null = null;
