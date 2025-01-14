@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_DB_IP, PUBLIC_DB_PORT } from '$env/static/public';
+	import { PUBLIC_DB_URL } from '$env/static/public';
 	import History from '$lib/History.svelte';
 	import { onMount } from 'svelte';
 
@@ -7,9 +7,7 @@
 	let history_data: { [range: string]: number } = {};
 
 	onMount(async () => {
-		let res = await fetch(
-			`http://${PUBLIC_DB_IP}:${PUBLIC_DB_PORT}/orientation/grouped/?steps=` + steps
-		);
+		let res = await fetch(`http://${PUBLIC_DB_URL}/orientation/grouped/?steps=` + steps);
 		history_data = await res.json();
 	});
 </script>
