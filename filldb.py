@@ -2,8 +2,7 @@ import requests
 import json
 import random
 
-DB_IP = "172.31.180.135"
-DB_PORT = "8002"
+DB_URL = "backend.orientify.krenn.tech"
 
 # Sample data
 data = {
@@ -11,7 +10,7 @@ data = {
 }
 
 # URL of the API endpoint
-url = f"http://{DB_IP}:{DB_PORT}/orientation"
+url = f"http://{DB_URL}/orientation"
 
 # Function to send data to the API
 def send_data(data):

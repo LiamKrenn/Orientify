@@ -7,7 +7,7 @@
 	let history_data: { [range: string]: number } = {};
 
 	onMount(async () => {
-		let res = await fetch(`http://${PUBLIC_DB_URL}/orientation/grouped/?steps=` + steps);
+		let res = await fetch(`${PUBLIC_DB_URL}/orientation/grouped/?steps=` + steps);
 		history_data = await res.json();
 	});
 </script>
