@@ -2,7 +2,7 @@
 FROM python:3.12-alpine
 
 # set work directory
-WORKDIR /usr/src/backend
+WORKDIR /src/backend
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -24,7 +24,7 @@ RUN set -eux \
   && rm -rf /root/.cache/pip
 
 # copy project
-COPY . /usr/src/backend/
+COPY . /src/backend/
 
 # define the command to run the application
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
