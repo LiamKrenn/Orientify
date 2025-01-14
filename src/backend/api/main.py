@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from api import raw_data, orientation
+from . import raw_data, orientation
 from db.session import metadata, engine
 from fastapi.middleware.cors import CORSMiddleware
 
