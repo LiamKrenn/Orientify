@@ -18,7 +18,9 @@ origins = [
     "http://localhost:8003",
     "https://localhost",
     "https://localhost:8003",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://orientify.krenn.tech",
+    "*"
 ]
 
 app.add_middleware(
