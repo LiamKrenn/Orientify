@@ -7,7 +7,7 @@
 
 	let open = false;
 
-	let ws = new WebSocket(`ws://${PUBLIC_WS_URL}/`);
+	let ws = new WebSocket(`${PUBLIC_WS_URL}`);
 
 	let noDataYet = true;
 	let timePassed: string | null = null;
