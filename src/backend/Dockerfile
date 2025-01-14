@@ -1,16 +1,29 @@
-FROM python:3.12-slim
+# pull official base image
+FROM python:3.12-alpine
 
-WORKDIR /src/app
+# set work directory
+WORKDIR /usr/src/backend
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.txt /src/app/requirements.txt
-RUN apt update
-RUN apt install git -y
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir --upgrade -r /src/app/requirements.txt
+# copy requirements file
+COPY ./requirements.txt /usr/src/backend/requirements.txt
 
-COPY . /src/app
+# install dependencies
+RUN set -eux \
+  && apk add --no-cache --virtual .build-deps build-base \
+  openssl-dev libffi-dev gcc musl-dev python3-dev \
+  postgresql-dev bash \
+  && pip install --upgrade pip setuptools wheel \
+  && pip install -r /usr/src/backend/requirements.txt \
+  && rm -rf /root/.cache/pip
 
-CMD ["uvicorn api.main:app --host 0.0.0.0 --port 8000 --log-level critical"]
+# copy project
+COPY . /usr/src/backend/
+
+# define the command to run the application
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+EXPOSE 8000
