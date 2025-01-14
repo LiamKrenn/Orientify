@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { PUBLIC_WS_URL } from '$env/static/public';
 	import Compass from '$lib/Compass.svelte';
 	import { onDestroy } from 'svelte';
@@ -7,33 +8,33 @@
 
 	let open = false;
 
-	let ws = new WebSocket(`${PUBLIC_WS_URL}`);
-
 	let noDataYet = true;
 	let timePassed: string | null = null;
 	let lastEventTime: number | null = null;
 
-	ws.onopen = () => {
-		open = true;
-		console.log('Connected to WebSocket');
-	};
+	let ws: WebSocket | null = null;
 
-	ws.onclose = () => {
-		open = false;
-		console.log('Disconnected from WebSocket');
-	};
+	if (!browser) {
+		ws = new WebSocket(`${PUBLIC_WS_URL}`);
 
-	ws.onmessage = (event) => {
-		console.log(event);
+		ws.onopen = () => {
+			open = true;
+			console.log('Connected to WebSocket');
+		};
 
-		noDataYet = false;
-		degree = parseFloat(event.data);
-		lastEventTime = Date.now();
-	};
+		ws.onclose = () => {
+			open = false;
+			console.log('Disconnected from WebSocket');
+		};
 
-	// setInterval(() => {
-	// 	degree = (degree + 0.1) % 360;
-	// }, 2);
+		ws.onmessage = (event) => {
+			console.log(event);
+
+			noDataYet = false;
+			degree = parseFloat(event.data);
+			lastEventTime = Date.now();
+		};
+	}
 
 	setInterval(() => {
 		if (lastEventTime) {
@@ -49,7 +50,7 @@
 	}, 1000);
 
 	onDestroy(() => {
-		ws.close();
+		ws?.close();
 	});
 </script>
 
