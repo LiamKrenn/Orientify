@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  mqtt-to-db:
+    build: .
+    container_name: mqtt-to-db
+    environment:
+      - DATABASE_URL=postgresql://orientify_manager:orientify_manager@172.31.180.211:8005/orientify_manager_dev
+      - MQTT_BROKER=172.31.180.211
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=orientify_data
+      - MQTT_USER=admin
+      - MQTT_PWD=admin
