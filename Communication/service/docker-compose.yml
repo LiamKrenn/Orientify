@@ -5,7 +5,7 @@ services:
     build: src
     container_name: service
     environment:
-      - MQTT_BROKER=host.docker.internal
+      - MQTT_BROKER=172.31.180.168
       - MQTT_PORT=1883
       - MQTT_TOPIC=orientify_data
       - MQTT_USER=admin

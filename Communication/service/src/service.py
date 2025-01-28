@@ -2,8 +2,18 @@ import asyncio
 from websockets.asyncio.client import connect
 import paho.mqtt.client as mqtt
 import os
+from datetime import datetime
+import random
 
 from calculation import calculate_angle
+
+
+#   Testdata
+DISTANCE = 0.3
+T1 = datetime(2024, 12, 17, 10, 0, 0, 0)
+T2 = datetime(2024, 12, 17, 10, 0, 0, 500)
+
+random.seed(10)
 
 
 class WebSocketClient:
@@ -42,7 +52,8 @@ class MQTTConsumer:
         message = msg.payload.decode("utf-8")
         print(f"Received MQTT message: {message}")
 
-        asyncio.run(self.websocket_client.send_message(calculate_angle(message)))
+        #asyncio.run(self.websocket_client.send_message(f'{calculate_angle(DISTANCE, T1, datetime(2024, 12, 17, 10, 0, 0, random.randint(70, 999)))}'))
+        asyncio.run(self.websocket_client.send_message(f'{random.randint(0, 360)}'))
 
 
     def start(self):
